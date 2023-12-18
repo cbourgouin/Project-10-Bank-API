@@ -1,13 +1,30 @@
+import "./App.css";
 
-import './App.css';
+import iconChat from "../../assets/img/icon-chat.png";
+import iconMoney from "../../assets/img/icon-money.png";
+import iconSecurity from "../../assets/img/icon-security.png";
 
-import iconChat from '../../assets/img/icon-chat.png';
-import iconMoney from '../../assets/img/icon-money.png';
-import iconSecurity from '../../assets/img/icon-security.png';
+import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
+import Card from "../../components/Card/Card";
 
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
-
+const cardDatas = [
+  {
+    icon: iconChat,
+    title: "You are our #1 priority",
+    text: "Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."
+  },
+  {
+    icon: iconMoney,
+    title: "More savings means higher rates",
+    text: "The more you save with us, the higher your interest rate will be!"
+  },
+  {
+    icon: iconSecurity,
+    title: "Security you can trust",
+    text: "We use top of the line encryption to make sure your data and money is always safe."
+  }
+];
 
 function App() {
   return (
@@ -20,42 +37,21 @@ function App() {
             <p className="subtitle">No fees.</p>
             <p className="subtitle">No minimum deposit.</p>
             <p className="subtitle">High interest rates.</p>
-            <p className="text">Open a savings account with Argent Bank today!</p>
+            <p className="text">
+              Open a savings account with Argent Bank today!
+            </p>
           </section>
         </div>
         <section className="features">
           <h2 className="sr-only">Features</h2>
-          <div className="feature-item">
-            <img src={iconChat} alt="Chat Icon" className="feature-icon" />
-            <h3 className="feature-item-title">You are our #1 priority</h3>
-            <p>
-              Need to talk to a representative? You can get in touch through our
-              24/7 chat or through a phone call in less than 5 minutes.
-            </p>
-          </div>
-          <div className="feature-item">
-            <img
-              src={iconMoney}
-              alt="Chat Icon"
-              className="feature-icon"
-            />
-            <h3 className="feature-item-title">More savings means higher rates</h3>
-            <p>
-              The more you save with us, the higher your interest rate will be!
-            </p>
-          </div>
-          <div className="feature-item">
-            <img
-              src={iconSecurity}
-              alt="Chat Icon"
-              className="feature-icon"
-            />
-            <h3 className="feature-item-title">Security you can trust</h3>
-            <p>
-              We use top of the line encryption to make sure your data and money
-              is always safe.
-            </p>
-          </div>
+          {cardDatas.map((cardData, index) => {
+            return <Card
+            key={"card_" + index.toString()}
+            icon={cardData.icon}
+            title={cardData.title}
+            text={cardData.text}
+          />
+          })}
         </section>
       </main>
       <Footer />

@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px 20px;
+    height: 54px;
 }
 
 .main-nav a {
@@ -17,10 +18,13 @@
 .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    height: 64px;
+    line-height: 64px;
 }
 
 .main-nav-item:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .main-nav-logo {

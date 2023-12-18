@@ -110,6 +110,133 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transaction:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Payment Module
+      summary: Transaction
+      description: API for view all their transactions for the current month, grouped by account
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: get Transactions
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description:  Bad Request 
+        '500':
+          description: Internal Server Error
+  /user/transaction/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: "transaction id"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Payment Module"
+      summary: Transaction
+      description: API for view one transaction identifie with id
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: get Transaction
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description:  Bad Request 
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - "Payment Module"
+      summary: "Edit a transaction"
+      description: "Edit transaction information"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - name: body
+          in: body
+          description: "transaction modified"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        '200':
+          description: "Success: transaction modified"
+        '400':
+          description: "Bad Request"
+        '404':
+          description: "Transaction not found"
+        '500':
+          description: "Internal Server Error"
+
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "Payment Module"
+      summary: "Delete a transaction"
+      description: "Delete a transaction"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      responses:
+        204:
+          description: "Success: transaction deleted"
+        404:
+          description: "Transaction not found"
+        '500':
+          description: "Internal Server Error"
+
+    post:
+      summary: "Add a transaction"
+      description: "Add a new transaction"
+      security:
+        - Bearer: []
+      tags:
+        - "Payment Module"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - name: body
+          in: body
+          description: "New transaction"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        201:
+          description: "Success: transaction added"
+        400:
+          description: "Incorrect query"
+        '500':
+          description: "Internal Server Error"
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -164,3 +291,28 @@ definitions:
         type: string
       lastName:
         type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: number
+      amount:
+        type: number 
+  Transactions:
+    type: array
+    items:
+      type: object
+      properties: 
+        account:
+          type: string
+        transactions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              amount:
+                type: number 
+  
+
