@@ -1,18 +1,20 @@
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-import { useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import "./User.css";
-import { selectProfil } from "../../utils/selectors";
-import { useEffect, useState } from "react";
+import { selectProfil, selectUserPage } from "../../utils/selectors";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfil } from "../../features/profil";
+import { formVisibleToggle } from "../../features/userPage";
 
 function User() {
-    let profil = useSelector(selectProfil);
+    const profil = useSelector(selectProfil);
+    const userPageState = useSelector(selectUserPage)
     const token = localStorage.getItem("token");
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const store = useStore();
-    const [toogleForm, setToggleForm] = useState(false);
 
     async function onClickSaveButton() {
         const firstNameInput = document.getElementById("firstName");
@@ -20,25 +22,25 @@ function User() {
         const firstName = firstNameInput.value;
         const lastName = lastNameInput.value;
         await updateProfil(store, token, firstName, lastName);
-        
+
     }
 
     useEffect(() => {
-        if(profil.status === "resolved") {
-            setToggleForm(false);
+        if (profil.status === "resolved") {
+            dispatch(formVisibleToggle());
         }
-    }, [profil]);
+    }, [profil, dispatch]);
 
     useEffect(() => {
         if (token === null || token === undefined) {
             navigate("/")
         }
-    }, [token]);
+    }, [token, navigate]);
 
     return <>
         <NavBar />
         <main className="main bg-dark">
-            {toogleForm === true ? (
+            {userPageState.formVisible === true ? (
                 <div className="header header__form">
                     <h1>Welcome back</h1>
                     <form>
@@ -48,14 +50,14 @@ function User() {
                         </div>
                         <div>
                             <button className="save-button" onClick={onClickSaveButton}>Save</button>
-                            <button className="cancel-button" onClick={() => setToggleForm(false)}>Cancel</button>
+                            <button className="cancel-button" onClick={() => dispatch(formVisibleToggle())}>Cancel</button>
                         </div>
                     </form>
                 </div>
             ) : (
                 <div className="header">
                     <h1>Welcome back<br />{profil.status === "resolved" ? profil.data.firstName + " " + profil.data.lastName : ""}!</h1>
-                    <button className="edit-button" onClick={() => setToggleForm(true)}>Edit Name</button>
+                    <button className="edit-button" onClick={() => dispatch(formVisibleToggle())}>Edit Name</button>
                 </div>
             )
             }

@@ -15,6 +15,12 @@
     color: #42b983;
 }
 
+.main-nav__account {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
@@ -35,4 +41,10 @@
 .main-nav-logo-image {
     max-width: 100%;
     width: 200px;
+}
+
+@media only screen and (max-width: 450px) {
+    .main-nav-item__signout-text{
+        display: none;
+    }
 }

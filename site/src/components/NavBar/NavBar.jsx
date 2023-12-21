@@ -3,20 +3,20 @@ import './NavBar.css'
 import argentBankLogo from '../../assets/img/argentBankLogo.png';
 
 import { useStore, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { fetchProfil } from '../../features/profil';
 import { selectProfil } from '../../utils/selectors';
 
 function NavBar() {
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    let token = localStorage.getItem('token');
     const store = useStore();
     const profil = useSelector(selectProfil);
     const navigate = useNavigate();
 
     function logoutButtonOnClick() {
         localStorage.removeItem('token');
-        setToken(localStorage.getItem('token'));
+        token = localStorage.getItem('token');
         navigate("/");
     }
 
@@ -36,7 +36,7 @@ function NavBar() {
                 />
                 <h1 className="sr-only">Argent Bank</h1>
             </a>
-            <div>
+            <div className="main-nav__account">
                 {profil.status === 'resolved' && token !== null ?
                     <>
                         <a className="main-nav-item" href="/user">
@@ -47,7 +47,7 @@ function NavBar() {
                             onClick={logoutButtonOnClick}
                         >
                             <i className="fa fa-sign-out"></i>
-                            Sign Out
+                            <span className='main-nav-item__signout-text'>Sign Out</span>
                         </span>
                     </>
                     :
