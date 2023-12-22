@@ -24,10 +24,10 @@ function Login() {
 
     useEffect(() => {
         if (login.status === 'resolved') {
-            navigate("/");
+            navigate("/profil");
         } else if (login.status === 'rejected') {
-            document.getElementById("username").value = "";
             document.getElementById("password").value = "";
+            document.getElementById("password").focus();
         }
     }, [login, navigate]);
 

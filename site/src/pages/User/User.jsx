@@ -16,7 +16,8 @@ function User() {
     const navigate = useNavigate();
     const store = useStore();
 
-    async function onClickSaveButton() {
+    async function onClickSaveButton(e) {
+        e.preventDefault();
         const firstNameInput = document.getElementById("firstName");
         const lastNameInput = document.getElementById("lastName");
         const firstName = firstNameInput.value;
@@ -40,7 +41,7 @@ function User() {
     return <>
         <NavBar />
         <main className="main bg-dark">
-            {userPageState.formVisible === true ? (
+            {userPageState.formVisible === false ? (
                 <div className="header header__form">
                     <h1>Welcome back</h1>
                     <form>

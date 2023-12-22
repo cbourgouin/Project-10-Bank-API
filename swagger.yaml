@@ -134,6 +134,31 @@ paths:
           description:  Bad Request 
         '500':
           description: Internal Server Error
+    post:
+      summary: "Add a transaction"
+      description: "Add a new transaction"
+      security:
+        - Bearer: []
+      tags:
+        - "Payment Module"
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - name: body
+          in: body
+          description: "New transaction"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        201:
+          description: "Success: transaction added"
+        400:
+          description: "Incorrect query"
+        500:
+          description: "Internal Server Error"
   /transaction/{id}:
     parameters:
       - name: id
@@ -214,32 +239,6 @@ paths:
         404:
           description: "Transaction not found"
         '500':
-          description: "Internal Server Error"
-
-    post:
-      summary: "Add a transaction"
-      description: "Add a new transaction"
-      security:
-        - Bearer: []
-      tags:
-        - "Payment Module"
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - name: body
-          in: body
-          description: "New transaction"
-          required: true
-          schema:
-            $ref: "#/definitions/Transaction"
-      responses:
-        201:
-          description: "Success: transaction added"
-        400:
-          description: "Incorrect query"
-        500:
           description: "Internal Server Error"
 securityDefinitions:
   Bearer:
@@ -346,4 +345,3 @@ definitions:
                 type: array
                 items: 
                   type: string
-

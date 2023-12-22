@@ -39,7 +39,7 @@ function NavBar() {
             <div className="main-nav__account">
                 {profil.status === 'resolved' && token !== null ?
                     <>
-                        <a className="main-nav-item" href="/user">
+                        <a className="main-nav-item" href="/profil">
                             <i className="fa fa-user-circle"></i>
                             {profil.data.firstName + ' ' + profil.data.lastName}
                         </a>
